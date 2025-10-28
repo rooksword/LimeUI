@@ -76,10 +76,10 @@ color_picker
 		new LuiPanel()
 			.setFlexDirection(flexpanel_flex_direction.row)
 			.addContent([
-				new LuiInput({ value: 255, placeholder: "H", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "hue_string"),
-				new LuiInput({ value: 255, placeholder: "S", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "sat_string"),
-				new LuiInput({ value: 255, placeholder: "V", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "val_string"),
-				new LuiInput({ value: 255, placeholder: "A", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "alp_string").addEvent(LUI_EV_VALUE_UPDATE, function(_e) { color_picker.alp = 1 - (_e.getReal() / 255); color_output.alpha = 1 - color_picker.alp; color_picker.updateMainUiSurface(); }),
+				new LuiInput({ value: 255, prefix: "H: ", placeholder: "0", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "hue_string"),
+				new LuiInput({ value: 255, prefix: "S: ", placeholder: "0", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "sat_string"),
+				new LuiInput({ value: 255, prefix: "V: ", placeholder: "0", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "val_string"),
+				new LuiInput({ value: 255, prefix: "A: ", placeholder: "0", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "alp_string").addEvent(LUI_EV_VALUE_UPDATE, function(_e) { color_picker.alp = 1 - (_e.getReal() / 255); color_output.alpha = 1 - color_picker.alp; color_picker.updateMainUiSurface(); }),
 				color_output
 			])
 		]
