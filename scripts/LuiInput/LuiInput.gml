@@ -16,6 +16,7 @@ enum LUI_INPUT_MODE {
 /// input_mode (LUI_INPUT_MODE: text, password, numbers, sint, letters, alphanumeric)
 /// excluded_chars (string of forbidden chars, e.g. "!@#")
 /// allowed_chars (string of allowed chars, e.g. "!@", takes priority over excluded_chars)
+/// prefix (string which will appear before input)
 ///@arg {Struct} [_params] Struct with parameters
 function LuiInput(_params = {}) : LuiBase(_params) constructor {
     
@@ -26,6 +27,7 @@ function LuiInput(_params = {}) : LuiBase(_params) constructor {
     self.input_mode = _params[$ "input_mode"] ?? LUI_INPUT_MODE.text;
     self.excluded_chars = _params[$ "excluded_chars"] ?? "";
     self.allowed_chars = _params[$ "allowed_chars"] ?? "";
+	self.prefix = _params[$ "prefix"] ?? "";
     
     self.is_incorrect = false;
     self.cursor_pointer = "";
@@ -222,6 +224,9 @@ function LuiInput(_params = {}) : LuiBase(_params) constructor {
             }
         }
         
+		//Add prefix
+		if is_string(self.prefix) _display_text = self.prefix + _display_text;
+		
         //Cut
         if _display_text != "" {
             while(string_width(_display_text) > (self.width - (2 * _margin)))
