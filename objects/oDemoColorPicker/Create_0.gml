@@ -24,24 +24,67 @@ demo_style = new LuiStyle()
 // Create the main ui container
 my_ui = new LuiMain().setStyle(demo_style);
 
-color_picker_a = new LuiColorPicker();
-with color_picker_a
+surf_satval = -1;
+surf_hue = -1;
+surf_alp = -1;
+
+color_output = new LuiImage({ value: sHSV_0, color: c_red });
+
+color_picker = new LuiPanel();
+
+enum SELECTED
 {
-	self.satval_width = 400;
-	self.satval_height = 200;
-	self.width = self.satval_width;
-	self.height = self.satval_height + self.hue_bar_height + self.result_size + (16 * 2) + 1;	
+	NOTHING,
+	SATVAL,
+	HUE,
+	ALP
 }
 
-color_picker_b = new LuiColorPicker();
-with color_picker_b
-{
-	self.satval_width = 200;
-	self.satval_height = 400;
-	self.width = self.satval_width;
-	self.height = self.satval_height + self.hue_bar_height + self.result_size + (16 * 2) + 1;	
-}
+color_picker.selected = SELECTED.NOTHING;
 
-panel = new LuiPanel().setFlexDirection(flexpanel_flex_direction.row).addContent([color_picker_a, color_picker_b]);
+color_picker.hue = 255;
+color_picker.sat = 255;
+color_picker.val = 255;
+color_picker.alp = 0;
+
+color_picker.hue_string = "255";
+color_picker.sat_string = "255";
+color_picker.val_string = "255";
+color_picker.alp_string = "255";
+
+color_picker
+	.setWidth(500)
+	.addContent([
+		new LuiPanel()
+			.setFlexDirection(flexpanel_flex_direction.row)
+			.addContent(
+			[
+				new LuiSurface({ name: "LuiSurface", width: 255 }),
+				new LuiSurface({
+					name: "HueSurface",
+					width: 32,
+					height: 255,
+					maintain_aspect: false
+				}),
+				new LuiSurface({
+					name: "AlpSurface",
+					width: 32,
+					height: 255,
+					maintain_aspect: false
+				})
+			]),
+		new LuiPanel()
+			.setFlexDirection(flexpanel_flex_direction.row)
+			.addContent([
+				new LuiInput({ value: 255, placeholder: "H", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "hue_string"),
+				new LuiInput({ value: 255, placeholder: "S", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "sat_string"),
+				new LuiInput({ value: 255, placeholder: "V", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "val_string"),
+				new LuiInput({ value: 255, placeholder: "A", input_mode: LUI_INPUT_MODE.numbers }).bindVariable(color_picker, "alp_string").addEvent(LUI_EV_VALUE_UPDATE, function(_e) { color_picker.alp = 1 - (_e.getReal() / 255); color_output.alpha = 1 - color_picker.alp; color_picker.updateMainUiSurface(); }),
+				color_output
+			])
+		]
+);
+
+panel = new LuiPanel().setFlexDirection(flexpanel_flex_direction.row).addContent(color_picker);
 
 my_ui.addContent(panel);

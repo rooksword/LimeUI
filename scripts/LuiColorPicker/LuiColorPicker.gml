@@ -21,13 +21,6 @@ function LuiColorPicker(_params = {}) : LuiBase(_params) constructor {
 	self.hue = 0;
 	self.val = 255;
 	
-	enum SELECTED
-	{
-		NOTHING,
-		SATVAL,
-		HUE
-	}
-	
 	self.selected = SELECTED.NOTHING;
 	
 	self.update = function()

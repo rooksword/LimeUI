@@ -76,6 +76,7 @@
     {"name":"sHSV_0","order":2,"path":"sprites/sHSV_0/sHSV_0.yy",},
     {"name":"sHSV_2","order":1,"path":"sprites/sHSV_2/sHSV_2.yy",},
     {"name":"sHSV_3","order":3,"path":"sprites/sHSV_3/sHSV_3.yy",},
+    {"name":"sHSV_4","order":4,"path":"sprites/sHSV_4/sHSV_4.yy",},
     {"name":"sIconHome","order":7,"path":"sprites/sIconHome/sIconHome.yy",},
     {"name":"sIconInfo","order":8,"path":"sprites/sIconInfo/sIconInfo.yy",},
     {"name":"sIconKey","order":30,"path":"sprites/sIconKey/sIconKey.yy",},
