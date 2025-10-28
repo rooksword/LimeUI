@@ -33,14 +33,26 @@ if mouse_check_button(mb_left)
 		color_picker.sat_string = string(round(color_picker.sat * 255));
 		color_picker.val_string = string(round(color_picker.val * 255));
 		
-		color_output.color_blend = make_color_hsv(color_picker.hue * 255, color_picker.sat * 255, color_picker.val * 255);
+		var _c = make_color_hsv(color_picker.hue * 255, color_picker.sat * 255, color_picker.val * 255);
+		
+		color_output.color_blend = _c;
+		
+		color_picker.r_string = string(colour_get_red(_c));
+		color_picker.g_string = string(colour_get_green(_c));
+		color_picker.b_string = string(colour_get_blue(_c));
 	}
 	else if color_picker.selected == SELECTED.HUE
 	{
 		color_picker.hue = clamp((_my - _hue_element.y) / _hue_element.height, 0, 1);
 		color_picker.hue_string = string(round(color_picker.hue * 255));
 		
-		color_output.color_blend = make_color_hsv(color_picker.hue * 255, color_picker.sat * 255, color_picker.val * 255);
+		var _c = make_color_hsv(color_picker.hue * 255, color_picker.sat * 255, color_picker.val * 255);
+		
+		color_output.color_blend = _c;
+		
+		color_picker.r_string = string(colour_get_red(_c));
+		color_picker.g_string = string(colour_get_green(_c));
+		color_picker.b_string = string(colour_get_blue(_c));
 	}
 	else if color_picker.selected == SELECTED.ALP
 	{
