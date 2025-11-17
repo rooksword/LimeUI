@@ -137,17 +137,23 @@ function LuiBase(_params = {}) constructor {
 	
 	// EVENT LISTENER SYSTEM
 	self.event_listeners = {};
+	self.key_bindings = [];
 	
 	///@desc Add a callback for a specific event
 	/// Check "LuiEvents" script for available events
 	///@param {string} _eventType The event type (constants of string e.g., LUI_EV_CREATE, LUI_EV_CLICK)
 	///@param {function} _callback The callback function to execute
+	///@param {constant} _key The key to trigger the event
 	///@return {struct} The element itself for chaining
-	static addEvent = function(_eventType, _callback) {
+	static addEvent = function(_eventType, _callback, _key) {
 		if (is_undefined(self.event_listeners[$ _eventType])) {
 			self.event_listeners[$ _eventType] = [];
 		}
 		array_push(self.event_listeners[$ _eventType], _callback);
+		array_push(self.key_bindings, {
+			func: _callback,
+			key: _key
+		});
 		return self;
 	}
 	
@@ -170,6 +176,7 @@ function LuiBase(_params = {}) constructor {
 	///@desc Call events from event listener
 	///@ignore
 	static _dispatchEvent = function(_eventType, _data = undefined) {
+		if _eventType == LUI_EV_CLICK
 		if (!is_undefined(self.event_listeners[$ _eventType])) {
 			var _listeners = self.event_listeners[$ _eventType];
 			for (var i = 0; i < array_length(_listeners); i++) {
@@ -1601,6 +1608,16 @@ function LuiBase(_params = {}) constructor {
 	    var _elements = self.content;
 	    var _source_length = array_length(_elements);
 	    
+		// Check key bindings
+		for (var i = 0, _len = array_length(self.key_bindings); i < _len; i++;)
+		{
+			var _binding = self.key_bindings[i];
+			if keyboard_check_pressed(_binding.key)
+			{
+				_binding.func();	
+			}
+		}
+		
 	    for (var i = _source_length - 1; i >= 0; --i) {
 	        var _element = _elements[i];
 	        
